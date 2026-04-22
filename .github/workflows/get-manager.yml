@@ -1,10 +1,11 @@
-name: GetManager
+name: Get Manager
+
 permissions:
-  contents: write  # Allow writing to repository contents (for pushing tags)
-  actions: read   # Allows triggering actions
+  contents: write
+  actions: read
 
 on:
-  workflow_call: # This allows this workflow to be called from another workflow
+  workflow_call:
     inputs:
       kernelsu_variant:
         required: true
