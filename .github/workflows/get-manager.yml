@@ -56,7 +56,7 @@ jobs:
           echo "  - Ref Type:          ${{ github.ref_type }}"
           echo " "
           echo "======================================================="
-          
+
       - name: 安装依赖
         run: |
           sudo apt-get update
@@ -93,7 +93,7 @@ jobs:
           REPO="ReSukiSU/ReSukiSU"
           KSUM="Manager"
           FILENAME="build-manager.yml"
-          
+
           # 初始化
           NUMBER=0
           DOWNLOAD_LIST=""
@@ -128,12 +128,12 @@ jobs:
               break
             fi
           done
-         
+
           if [ -z "$DOWNLOAD_LIST" ]; then
             echo "未获取到可用的 Manager artifact 下载地址列表。"
             exit 1
           fi
-          
+
           # 下载并解压所有 Manager 产物
           echo "$DOWNLOAD_LIST" | while IFS=$'\t' read -r NAME URL; do
             SAFE_NAME=$(echo "$NAME" | tr '/ ' '__')
@@ -156,19 +156,19 @@ jobs:
           ARTIFACTS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/sidex15/susfs4ksu-module/actions/runs/$BUILD_ID/artifacts")
 
-          DOWNLOAD_URL=$(echo "$ARTIFACTS" | jq -r '.artifacts[0].archive_download_url') 
+          DOWNLOAD_URL=$(echo "$ARTIFACTS" | jq -r '.artifacts[0].archive_download_url')
 
           NAME=$(echo "$ARTIFACTS" | jq -r '.artifacts[0].name')
           echo "SUSFS_NAME=$NAME" >> $GITHUB_ENV
           NAME="susfs-$NAME.zip"
-          
+
           echo $DOWNLOAD_URL
           echo $NAME
           # 下载 Manager 文件
           curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o "$NAME" "$DOWNLOAD_URL"
           echo "$NAME 文件已下载.zip"
-          
-          
+
+
           # 解压 artifact zip 获取里面的模块文件
           mkdir -p susfs-module
           unzip "$NAME" -d susfs-temp
