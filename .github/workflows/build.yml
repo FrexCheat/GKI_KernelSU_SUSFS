@@ -5,7 +5,7 @@
 # 通过 workflow_call 被其他工作流调用，不直接手动触发
 # ========================================
 
-name: 内核构建流程
+name: 2 - Build GKI Kernel
 
 # 适配 Node.js 24
 env:
@@ -501,7 +501,7 @@ jobs:
             #   sed -i '/#include <linux\/cpufreq_times.h>/a #ifdef CONFIG_KSU_SUSFS_SUS_MAP' ./fs/proc/base.c
             # fi
           fi
-          
+
 
           # Android 13 - 5.15 修复
           if [[ "${{ inputs.android_version }}" == "android13" && "${{ inputs.kernel_version }}" == "5.15" ]]; then
@@ -875,7 +875,7 @@ jobs:
           # 配置内核名称
           if [ -n "${{ inputs.version }}" ]; then
             CLEAN_VERSION=$(echo "${{ inputs.version }}" | sed -E 's/^[0-9]+\.[0-9]+\.[0-9]+//')
-            
+
             # 定义 KMI_TAG（与自动版本保持一致）
             case "${{ inputs.android_version }}-${{ inputs.kernel_version }}" in
               "android14-6.1")  KMI_TAG="android14-11" ;;
@@ -883,7 +883,7 @@ jobs:
               "android16-6.12") KMI_TAG="android16-5" ;;
               *) KMI_TAG="${{ inputs.android_version }}" ;;
             esac
-            
+
             if [ "${{ inputs.kernel_version }}" = "6.1" ]; then
               # 6.1：旧格式，包含 KMI_TAG
               KMI_LOCAL="-${KMI_TAG}${CLEAN_VERSION}"
@@ -970,7 +970,7 @@ jobs:
             echo "不要问，不要急，这跟你怎么努力，或者跟我反馈没关系，因为这跟我无关。"
             echo "等待适配即可，你有能力则自己去SUKISU仓库提交代码，"
             echo "::endgroup::"
-            
+
             echo "当前 KSU 最新提交日期: ${KSU_LATEST_COMMIT_DATE}"
             echo "当前 SUSFS 最新提交日期: ${SUSFS_LATEST_COMMIT_DATE}"
             set -ex
