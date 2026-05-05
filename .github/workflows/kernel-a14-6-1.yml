@@ -11,9 +11,8 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      # KernelSU 变体固定为 ReSukiSU
       kernelsu_branch:
-        description: "KSU 分支 (main/builtin/自定义commit hash，留空使用默认)"
+        description: "KSU 分支 (main/builtin/commit hash)"
         required: false
         type: string
         default: ""
@@ -22,7 +21,7 @@ on:
         required: false
         type: string
       build_time:
-        description: "自定义构建时间 (可选，N或留空=当前UTC)"
+        description: "自定义构建时间 (可选, 默认当前UTC)"
         required: false
         type: string
         default: "Sun Dec 01 08:10:00 UTC 2024"
@@ -53,7 +52,6 @@ on:
         default: false
   workflow_call:
     inputs:
-      # KernelSU 变体固定为 ReSukiSU
       kernelsu_branch:
         required: true
         type: string
